@@ -26,6 +26,7 @@
   <title>おえかきランド</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -36,6 +37,7 @@
       padding: 0;
       width: 100%;
       min-height: 100%;
+
       font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -43,6 +45,7 @@
         "Yu Gothic",
         "Meiryo",
         sans-serif;
+
       background: #f7f8fc;
       color: #333;
     }
@@ -59,6 +62,7 @@
       touch-action: manipulation;
     }
 
+
     /* =========================
        トップ画面
     ========================= */
@@ -67,6 +71,7 @@
       width: 100%;
       min-height: 100vh;
       min-height: 100dvh;
+
       padding: 32px 20px 40px;
 
       display: flex;
@@ -178,7 +183,9 @@
     }
 
 
-    /* 上のバー */
+    /* =========================
+       上のバー
+    ========================= */
 
     .drawing-header {
       height: 58px;
@@ -223,7 +230,9 @@
     }
 
 
-    /* キャンバス */
+    /* =========================
+       キャンバス
+    ========================= */
 
     #canvasArea {
       flex: 1;
@@ -252,17 +261,142 @@
 
 
     /* =========================
+       色パレット
+    ========================= */
+
+    #colorPalette {
+
+      position: absolute;
+
+      left: 30px;
+      top: 30px;
+
+      width: 250px;
+
+      padding: 12px;
+
+      background: white;
+
+      border: 3px solid #333;
+      border-radius: 18px;
+
+      box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.20);
+
+      z-index: 30;
+
+      display: none;
+
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    #colorPalette.show {
+      display: block;
+    }
+
+
+    /* パレット上部 */
+
+    .palette-header {
+
+      height: 36px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 10px;
+
+      cursor: grab;
+
+      touch-action: none;
+    }
+
+    .palette-header:active {
+      cursor: grabbing;
+    }
+
+    .palette-title {
+
+      font-size: 17px;
+      font-weight: 800;
+
+      padding-left: 4px;
+    }
+
+    .palette-close {
+
+      width: 36px;
+      height: 36px;
+
+      border: 2px solid #333;
+      border-radius: 50%;
+
+      background: white;
+
+      font-size: 22px;
+      line-height: 1;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .palette-close:active {
+      background: #eee;
+    }
+
+
+    /* 色 */
+
+    .color-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(6, 1fr);
+
+      gap: 11px;
+    }
+
+    .color-button {
+
+      width: 100%;
+      aspect-ratio: 1;
+
+      border: 2px solid #555;
+      border-radius: 50%;
+
+      cursor: pointer;
+
+      padding: 0;
+
+      touch-action: manipulation;
+    }
+
+    .color-button.selected {
+
+      outline: 4px solid #333;
+      outline-offset: 2px;
+    }
+
+
+    /* =========================
        ツールバー
     ========================= */
 
     .drawing-toolbar {
+
       min-height: 82px;
 
       flex-shrink: 0;
 
       display: flex;
       align-items: center;
-
       justify-content: center;
 
       gap: 8px;
@@ -283,6 +417,7 @@
     }
 
     .tool-button {
+
       flex: 0 0 auto;
 
       min-width: 72px;
@@ -302,11 +437,13 @@
     }
 
     .tool-button.active {
+
       background: #333;
       color: white;
     }
 
     .tool-icon {
+
       display: block;
 
       font-size: 23px;
@@ -318,121 +455,11 @@
 
 
     /* =========================
-       ポップアップ
-    ========================= */
-
-    .popup {
-      display: none;
-
-      position: absolute;
-
-      left: 50%;
-      bottom: 92px;
-
-      transform: translateX(-50%);
-
-      width: min(520px, calc(100% - 24px));
-
-      padding: 16px;
-
-      background: white;
-
-      border: 2px solid #333;
-      border-radius: 18px;
-
-      box-shadow: 0 5px 20px rgba(0,0,0,0.18);
-
-      z-index: 20;
-    }
-
-    .popup.show {
-      display: block;
-    }
-
-    .popup-title {
-      margin: 0 0 12px;
-
-      text-align: center;
-
-      font-size: 17px;
-      font-weight: 800;
-    }
-
-
-    /* 色 */
-
-    .color-grid {
-      display: grid;
-
-      grid-template-columns: repeat(8, 1fr);
-
-      gap: 9px;
-    }
-
-    .color-button {
-      width: 100%;
-      aspect-ratio: 1;
-
-      min-width: 34px;
-
-      border: 2px solid #555;
-      border-radius: 50%;
-
-      cursor: pointer;
-    }
-
-    .color-button.selected {
-      outline: 4px solid #333;
-      outline-offset: 2px;
-    }
-
-
-    /* 太さ */
-
-    .size-grid {
-      display: grid;
-
-      grid-template-columns: repeat(4, 1fr);
-
-      gap: 10px;
-    }
-
-    .size-button {
-      min-height: 55px;
-
-      border: 2px solid #333;
-      border-radius: 12px;
-
-      background: white;
-
-      cursor: pointer;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      gap: 8px;
-
-      font-weight: 700;
-    }
-
-    .size-dot {
-      display: inline-block;
-
-      width: var(--size);
-      height: var(--size);
-
-      border-radius: 50%;
-
-      background: #333;
-    }
-
-
-    /* =========================
        確認ダイアログ
     ========================= */
 
     .confirm-overlay {
+
       display: none;
 
       position: fixed;
@@ -453,6 +480,7 @@
     }
 
     .confirm-box {
+
       width: min(400px, 100%);
 
       padding: 25px;
@@ -466,24 +494,28 @@
     }
 
     .confirm-box h2 {
+
       margin: 0 0 10px;
 
       font-size: 23px;
     }
 
     .confirm-box p {
+
       margin: 0 0 22px;
 
       color: #666;
     }
 
     .confirm-buttons {
+
       display: flex;
 
       gap: 10px;
     }
 
     .confirm-buttons button {
+
       flex: 1;
 
       min-height: 52px;
@@ -497,6 +529,7 @@
     }
 
     .confirm-buttons .danger {
+
       background: #333;
       color: white;
     }
@@ -525,12 +558,12 @@
         justify-content: flex-start;
       }
 
-      .color-grid {
-        grid-template-columns: repeat(6, 1fr);
+      #colorPalette {
+        width: 230px;
       }
 
-      .size-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .color-grid {
+        gap: 9px;
       }
     }
 
@@ -545,8 +578,10 @@
         grid-template-columns: repeat(3, 1fr);
       }
     }
+
   </style>
 </head>
+
 
 <body>
 
@@ -557,19 +592,24 @@
 
   <main id="homeScreen">
 
-    <h1 class="title">おえかきランド</h1>
+    <h1 class="title">
+      おえかきランド
+    </h1>
 
     <p class="subtitle">
       すきなあそびをえらんでね
     </p>
 
+
     <div class="menu">
+
 
       <button
         class="menu-button"
         onclick="openDrawing()"
       >
         じゆうにおえかき
+
         <span class="small">
           すきなものをかこう
         </span>
@@ -578,6 +618,7 @@
 
       <button class="menu-button preparing">
         おだいにちょうせん
+
         <span class="small">
           じゅんびちゅう
         </span>
@@ -586,6 +627,7 @@
 
       <button class="menu-button preparing">
         おえかきタイムアタック
+
         <span class="small">
           じゅんびちゅう
         </span>
@@ -594,6 +636,7 @@
 
       <button class="menu-button preparing">
         へんなおだい
+
         <span class="small">
           じゅんびちゅう
         </span>
@@ -602,6 +645,7 @@
 
       <button class="menu-button preparing">
         おえかきしりとり
+
         <span class="small">
           じゅんびちゅう
         </span>
@@ -610,6 +654,7 @@
 
       <button class="menu-button preparing">
         へんしんおえかき
+
         <span class="small">
           じゅんびちゅう
         </span>
@@ -618,6 +663,7 @@
 
       <button class="menu-button preparing">
         すたんぷあそび
+
         <span class="small">
           じゅんびちゅう
         </span>
@@ -626,6 +672,7 @@
 
       <button class="menu-button preparing">
         まちをつくろう
+
         <span class="small">
           じゅんびちゅう
         </span>
@@ -634,6 +681,7 @@
 
       <button class="menu-button preparing">
         わたしのさくひん
+
         <span class="small">
           じゅんびちゅう
         </span>
@@ -647,6 +695,7 @@
         なにしてあそぶ？
       </button>
 
+
     </div>
 
   </main>
@@ -659,8 +708,6 @@
 
   <section id="drawingScreen">
 
-
-    <!-- 上部 -->
 
     <header class="drawing-header">
 
@@ -688,25 +735,42 @@
 
 
 
-    <!-- キャンバス -->
-
     <div id="canvasArea">
+
 
       <canvas id="drawingCanvas"></canvas>
 
 
-      <!-- 色ポップアップ -->
 
-      <div
-        id="colorPopup"
-        class="popup"
-      >
+      <!-- ==================================
+           色パレット
+      ================================== -->
 
-        <p class="popup-title">
-          いろをえらぼう
-        </p>
+      <div id="colorPalette">
+
+
+        <div
+          class="palette-header"
+          id="paletteDragHandle"
+        >
+
+          <div class="palette-title">
+            いろ
+          </div>
+
+
+          <button
+            class="palette-close"
+            onclick="closeColorPalette(event)"
+          >
+            ×
+          </button>
+
+        </div>
+
 
         <div class="color-grid">
+
 
           <button
             class="color-button selected"
@@ -715,12 +779,14 @@
             onclick="selectColor(this)"
           ></button>
 
+
           <button
             class="color-button"
             style="background:#e53935"
             data-color="#e53935"
             onclick="selectColor(this)"
           ></button>
+
 
           <button
             class="color-button"
@@ -729,12 +795,14 @@
             onclick="selectColor(this)"
           ></button>
 
+
           <button
             class="color-button"
             style="background:#fbc02d"
             data-color="#fbc02d"
             onclick="selectColor(this)"
           ></button>
+
 
           <button
             class="color-button"
@@ -743,12 +811,14 @@
             onclick="selectColor(this)"
           ></button>
 
+
           <button
             class="color-button"
             style="background:#00acc1"
             data-color="#00acc1"
             onclick="selectColor(this)"
           ></button>
+
 
           <button
             class="color-button"
@@ -757,12 +827,14 @@
             onclick="selectColor(this)"
           ></button>
 
+
           <button
             class="color-button"
             style="background:#8e24aa"
             data-color="#8e24aa"
             onclick="selectColor(this)"
           ></button>
+
 
           <button
             class="color-button"
@@ -771,12 +843,14 @@
             onclick="selectColor(this)"
           ></button>
 
+
           <button
             class="color-button"
             style="background:#795548"
             data-color="#795548"
             onclick="selectColor(this)"
           ></button>
+
 
           <button
             class="color-button"
@@ -785,6 +859,7 @@
             onclick="selectColor(this)"
           ></button>
 
+
           <button
             class="color-button"
             style="background:#ffffff"
@@ -792,71 +867,6 @@
             onclick="selectColor(this)"
           ></button>
 
-        </div>
-
-      </div>
-
-
-
-      <!-- 太さポップアップ -->
-
-      <div
-        id="sizePopup"
-        class="popup"
-      >
-
-        <p class="popup-title">
-          ふとさをえらぼう
-        </p>
-
-        <div class="size-grid">
-
-          <button
-            class="size-button"
-            onclick="selectSize(3, this)"
-          >
-            <span
-              class="size-dot"
-              style="--size:4px"
-            ></span>
-            ほそい
-          </button>
-
-
-          <button
-            class="size-button"
-            onclick="selectSize(7, this)"
-          >
-            <span
-              class="size-dot"
-              style="--size:8px"
-            ></span>
-            ふつう
-          </button>
-
-
-          <button
-            class="size-button"
-            onclick="selectSize(14, this)"
-          >
-            <span
-              class="size-dot"
-              style="--size:14px"
-            ></span>
-            ふとい
-          </button>
-
-
-          <button
-            class="size-button"
-            onclick="selectSize(28, this)"
-          >
-            <span
-              class="size-dot"
-              style="--size:26px"
-            ></span>
-            とてもふとい
-          </button>
 
         </div>
 
@@ -866,7 +876,9 @@
 
 
 
-    <!-- ツールバー -->
+    <!-- ==================================
+         ツールバー
+    ================================== -->
 
     <div class="drawing-toolbar">
 
@@ -894,7 +906,7 @@
       <button
         id="colorButton"
         class="tool-button"
-        onclick="togglePopup('colorPopup')"
+        onclick="toggleColorPalette()"
       >
         <span class="tool-icon">🎨</span>
         いろ
@@ -904,7 +916,7 @@
       <button
         id="sizeButton"
         class="tool-button"
-        onclick="togglePopup('sizePopup')"
+        onclick="selectSizeTool()"
       >
         <span class="tool-icon">●</span>
         ふとさ
@@ -946,6 +958,7 @@
         <span class="tool-icon">🗑</span>
         ぜんぶけす
       </button>
+
 
     </div>
 
@@ -1001,9 +1014,11 @@
 
     function openDrawing() {
 
-      document.getElementById("homeScreen").style.display = "none";
+      document.getElementById("homeScreen").style.display =
+        "none";
 
-      document.getElementById("drawingScreen").style.display = "flex";
+      document.getElementById("drawingScreen").style.display =
+        "flex";
 
       setTimeout(() => {
         resizeCanvas();
@@ -1014,18 +1029,22 @@
 
     function closeDrawing() {
 
-      document.getElementById("drawingScreen").style.display = "none";
+      document.getElementById("drawingScreen").style.display =
+        "none";
 
-      document.getElementById("homeScreen").style.display = "flex";
+      document.getElementById("homeScreen").style.display =
+        "flex";
 
-      closeAllPopups();
+      closeColorPalette();
 
     }
 
 
     function randomMode() {
 
-      alert("これから いろいろな あそびを つくっていくよ！");
+      alert(
+        "これから いろいろな あそびを つくっていくよ！"
+      );
 
     }
 
@@ -1109,12 +1128,15 @@
 
       currentTool = tool;
 
-      closeAllPopups();
+      closeColorPalette();
+
 
       document
         .querySelectorAll(".tool-button")
         .forEach(button => {
+
           button.classList.remove("active");
+
         });
 
 
@@ -1124,7 +1146,8 @@
           .getElementById("pencilButton")
           .classList.add("active");
 
-        canvas.style.cursor = "crosshair";
+        canvas.style.cursor =
+          "crosshair";
 
       }
 
@@ -1135,7 +1158,8 @@
           .getElementById("eraserButton")
           .classList.add("active");
 
-        canvas.style.cursor = "cell";
+        canvas.style.cursor =
+          "cell";
 
       }
 
@@ -1146,7 +1170,8 @@
           .getElementById("fillButton")
           .classList.add("active");
 
-        canvas.style.cursor = "cell";
+        canvas.style.cursor =
+          "cell";
 
       }
 
@@ -1155,7 +1180,46 @@
 
 
     /* ==================================
-       色
+       色パレット
+    ================================== */
+
+    function toggleColorPalette() {
+
+      const palette =
+        document.getElementById("colorPalette");
+
+
+      if (
+        palette.classList.contains("show")
+      ) {
+
+        closeColorPalette();
+
+      } else {
+
+        palette.classList.add("show");
+
+      }
+
+    }
+
+
+    function closeColorPalette(event) {
+
+      if (event) {
+        event.stopPropagation();
+      }
+
+      document
+        .getElementById("colorPalette")
+        .classList.remove("show");
+
+    }
+
+
+
+    /* ==================================
+       色を選ぶ
     ================================== */
 
     function selectColor(button) {
@@ -1167,14 +1231,22 @@
       document
         .querySelectorAll(".color-button")
         .forEach(b => {
+
           b.classList.remove("selected");
+
         });
 
 
       button.classList.add("selected");
 
 
+      /*
+        色を選んだら自動的に
+        えんぴつに戻す
+      */
+
       setTool("pencil");
+
 
       document
         .getElementById("colorButton")
@@ -1189,55 +1261,38 @@
        太さ
     ================================== */
 
-    function selectSize(size, button) {
+    function selectSizeTool() {
 
-      currentSize = size;
+      /*
+        今回はまだ太さパレットは作らず、
+        一時的に太さを順番に変更する
+      */
 
-      document
-        .querySelectorAll(".size-button")
-        .forEach(b => {
-          b.style.background = "white";
-          b.style.color = "#333";
-        });
+      const sizes = [3, 7, 14, 28];
 
+      const index =
+        sizes.indexOf(currentSize);
 
-      button.style.background = "#333";
-      button.style.color = "white";
+      const nextIndex =
+        (index + 1) % sizes.length;
 
-      closeAllPopups();
-
-    }
-
+      currentSize =
+        sizes[nextIndex];
 
 
-    /* ==================================
-       ポップアップ
-    ================================== */
-
-    function togglePopup(id) {
-
-      const popup =
-        document.getElementById(id);
-
-      const wasOpen =
-        popup.classList.contains("show");
-
-      closeAllPopups();
-
-      if (!wasOpen) {
-        popup.classList.add("show");
-      }
-
-    }
+      const button =
+        document.getElementById("sizeButton");
 
 
-    function closeAllPopups() {
+      button.style.borderWidth =
+        "4px";
 
-      document
-        .querySelectorAll(".popup")
-        .forEach(popup => {
-          popup.classList.remove("show");
-        });
+      setTimeout(() => {
+
+        button.style.borderWidth =
+          "2px";
+
+      }, 120);
 
     }
 
@@ -1253,8 +1308,15 @@
         canvas.getBoundingClientRect();
 
       return {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top
+
+        x:
+          event.clientX -
+          rect.left,
+
+        y:
+          event.clientY -
+          rect.top
+
       };
 
     }
@@ -1270,24 +1332,20 @@
       startDrawing
     );
 
-
     canvas.addEventListener(
       "pointermove",
       draw
     );
-
 
     canvas.addEventListener(
       "pointerup",
       stopDrawing
     );
 
-
     canvas.addEventListener(
       "pointercancel",
       stopDrawing
     );
-
 
     canvas.addEventListener(
       "pointerleave",
@@ -1300,16 +1358,14 @@
 
       event.preventDefault();
 
-      closeAllPopups();
-
 
       const pos =
         getPosition(event);
 
 
-      /* ぬりつぶし */
-
-      if (currentTool === "fill") {
+      if (
+        currentTool === "fill"
+      ) {
 
         saveHistory();
 
@@ -1327,11 +1383,16 @@
 
 
       try {
-        canvas.setPointerCapture(event.pointerId);
+
+        canvas.setPointerCapture(
+          event.pointerId
+        );
+
       } catch (e) {}
 
 
       ctx.beginPath();
+
 
       ctx.moveTo(
         pos.x,
@@ -1339,14 +1400,19 @@
       );
 
 
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
+      ctx.lineCap =
+        "round";
+
+      ctx.lineJoin =
+        "round";
 
       ctx.lineWidth =
         currentSize;
 
 
-      if (currentTool === "eraser") {
+      if (
+        currentTool === "eraser"
+      ) {
 
         ctx.globalCompositeOperation =
           "destination-out";
@@ -1361,8 +1427,6 @@
 
       }
 
-
-      /* 点を描く */
 
       ctx.lineTo(
         pos.x + 0.01,
@@ -1419,7 +1483,11 @@
 
 
       try {
-        canvas.releasePointerCapture(event.pointerId);
+
+        canvas.releasePointerCapture(
+          event.pointerId
+        );
+
       } catch (e) {}
 
 
@@ -1467,12 +1535,6 @@
         getCanvasData();
 
 
-      /*
-        途中で「もどす」をしたあとに
-        新しい絵を描いたら、
-        その先の履歴は消す
-      */
-
       history =
         history.slice(
           0,
@@ -1483,13 +1545,10 @@
       history.push(image);
 
 
-      /*
-        履歴が増えすぎないように
-        最大30回
-      */
-
       if (history.length > 30) {
+
         history.shift();
+
       }
 
 
@@ -1537,7 +1596,8 @@
       };
 
 
-      image.src = imageData;
+      image.src =
+        imageData;
 
     }
 
@@ -1545,11 +1605,15 @@
 
     function undo() {
 
-      closeAllPopups();
+      closeColorPalette();
 
 
-      if (historyIndex <= 0) {
+      if (
+        historyIndex <= 0
+      ) {
+
         return;
+
       }
 
 
@@ -1566,14 +1630,16 @@
 
     function redo() {
 
-      closeAllPopups();
+      closeColorPalette();
 
 
       if (
         historyIndex >=
         history.length - 1
       ) {
+
         return;
+
       }
 
 
@@ -1594,7 +1660,8 @@
 
     function confirmClear() {
 
-      closeAllPopups();
+      closeColorPalette();
+
 
       document
         .getElementById("confirmOverlay")
@@ -1662,16 +1729,15 @@
         window.devicePixelRatio || 1;
 
 
-      /*
-        Canvas内部は高解像度なので、
-        タップ位置を内部座標へ変換
-      */
-
       const x =
-        Math.floor(startX * ratio);
+        Math.floor(
+          startX * ratio
+        );
 
       const y =
-        Math.floor(startY * ratio);
+        Math.floor(
+          startY * ratio
+        );
 
 
       if (
@@ -1680,7 +1746,9 @@
         y < 0 ||
         y >= height
       ) {
+
         return;
+
       }
 
 
@@ -1718,17 +1786,15 @@
         hexToRgba(currentColor);
 
 
-      /*
-        すでに同じ色なら何もしない
-      */
-
       if (
         targetR === fillColor.r &&
         targetG === fillColor.g &&
         targetB === fillColor.b &&
         targetA === 255
       ) {
+
         return;
+
       }
 
 
@@ -1738,33 +1804,56 @@
       function matches(index) {
 
         return (
-          Math.abs(data[index] - targetR)
-            <= tolerance &&
 
-          Math.abs(data[index + 1] - targetG)
-            <= tolerance &&
+          Math.abs(
+            data[index] -
+            targetR
+          ) <= tolerance
 
-          Math.abs(data[index + 2] - targetB)
-            <= tolerance &&
+          &&
 
-          Math.abs(data[index + 3] - targetA)
-            <= tolerance
+          Math.abs(
+            data[index + 1] -
+            targetG
+          ) <= tolerance
+
+          &&
+
+          Math.abs(
+            data[index + 2] -
+            targetB
+          ) <= tolerance
+
+          &&
+
+          Math.abs(
+            data[index + 3] -
+            targetA
+          ) <= tolerance
+
         );
 
       }
 
 
-      const stack = [[x, y]];
+      const stack = [
+        [x, y]
+      ];
 
 
-      while (stack.length > 0) {
+      while (
+        stack.length > 0
+      ) {
 
         const point =
           stack.pop();
 
 
-        const px = point[0];
-        const py = point[1];
+        const px =
+          point[0];
+
+        const py =
+          point[1];
 
 
         if (
@@ -1773,7 +1862,9 @@
           py < 0 ||
           py >= height
         ) {
+
           continue;
+
         }
 
 
@@ -1781,8 +1872,12 @@
           (py * width + px) * 4;
 
 
-        if (!matches(index)) {
+        if (
+          !matches(index)
+        ) {
+
           continue;
+
         }
 
 
@@ -1799,10 +1894,21 @@
           255;
 
 
-        stack.push([px + 1, py]);
-        stack.push([px - 1, py]);
-        stack.push([px, py + 1]);
-        stack.push([px, py - 1]);
+        stack.push(
+          [px + 1, py]
+        );
+
+        stack.push(
+          [px - 1, py]
+        );
+
+        stack.push(
+          [px, py + 1]
+        );
+
+        stack.push(
+          [px, py - 1]
+        );
 
       }
 
@@ -1823,10 +1929,14 @@
     function hexToRgba(hex) {
 
       hex =
-        hex.replace("#", "");
+        hex.replace(
+          "#",
+          ""
+        );
 
 
       return {
+
         r: parseInt(
           hex.substring(0, 2),
           16
@@ -1843,6 +1953,7 @@
         ),
 
         a: 255
+
       };
 
     }
@@ -1876,14 +1987,219 @@
 
 
     /* ==================================
-       初期化
+       パレットを動かす
     ================================== */
 
-    /*
-      お絵かき画面を最初に開いたとき、
-      「最初の真っ白な状態」を
-      履歴に入れる
-    */
+    const palette =
+      document.getElementById(
+        "colorPalette"
+      );
+
+    const paletteHandle =
+      document.getElementById(
+        "paletteDragHandle"
+      );
+
+
+    let paletteDragging = false;
+
+    let palettePointerId = null;
+
+    let paletteOffsetX = 0;
+
+    let paletteOffsetY = 0;
+
+
+
+    paletteHandle.addEventListener(
+      "pointerdown",
+      startPaletteDrag
+    );
+
+
+    paletteHandle.addEventListener(
+      "pointermove",
+      movePalette
+    );
+
+
+    paletteHandle.addEventListener(
+      "pointerup",
+      stopPaletteDrag
+    );
+
+
+    paletteHandle.addEventListener(
+      "pointercancel",
+      stopPaletteDrag
+    );
+
+
+
+    function startPaletteDrag(event) {
+
+      event.preventDefault();
+
+      event.stopPropagation();
+
+
+      paletteDragging = true;
+
+      palettePointerId =
+        event.pointerId;
+
+
+      const paletteRect =
+        palette.getBoundingClientRect();
+
+
+      const canvasRect =
+        document
+          .getElementById("canvasArea")
+          .getBoundingClientRect();
+
+
+      paletteOffsetX =
+        event.clientX -
+        paletteRect.left;
+
+
+      paletteOffsetY =
+        event.clientY -
+        paletteRect.top;
+
+
+      try {
+
+        paletteHandle.setPointerCapture(
+          event.pointerId
+        );
+
+      } catch (e) {}
+
+    }
+
+
+
+    function movePalette(event) {
+
+      if (
+        !paletteDragging ||
+        event.pointerId !== palettePointerId
+      ) {
+
+        return;
+
+      }
+
+
+      event.preventDefault();
+
+      event.stopPropagation();
+
+
+      const canvasArea =
+        document.getElementById(
+          "canvasArea"
+        );
+
+
+      const areaRect =
+        canvasArea.getBoundingClientRect();
+
+
+      let newLeft =
+        event.clientX -
+        areaRect.left -
+        paletteOffsetX;
+
+
+      let newTop =
+        event.clientY -
+        areaRect.top -
+        paletteOffsetY;
+
+
+      /*
+        キャンバスから
+        パレットが完全にはみ出さないようにする
+      */
+
+      const maxLeft =
+        areaRect.width -
+        palette.offsetWidth -
+        5;
+
+
+      const maxTop =
+        areaRect.height -
+        palette.offsetHeight -
+        5;
+
+
+      newLeft =
+        Math.max(
+          5,
+          Math.min(
+            newLeft,
+            maxLeft
+          )
+        );
+
+
+      newTop =
+        Math.max(
+          5,
+          Math.min(
+            newTop,
+            maxTop
+          )
+        );
+
+
+      palette.style.left =
+        newLeft + "px";
+
+
+      palette.style.top =
+        newTop + "px";
+
+
+    }
+
+
+
+    function stopPaletteDrag(event) {
+
+      if (
+        event.pointerId !== palettePointerId
+      ) {
+
+        return;
+
+      }
+
+
+      paletteDragging = false;
+
+      palettePointerId = null;
+
+
+      try {
+
+        paletteHandle.releasePointerCapture(
+          event.pointerId
+        );
+
+      } catch (e) {}
+
+    }
+
+
+
+    /* ==================================
+       初期履歴
+    ================================== */
 
     function initializeHistory() {
 
@@ -1896,22 +2212,12 @@
     }
 
 
-    /*
-      サイズの初期選択
-    */
+    initializeHistory();
 
-    document
-      .querySelector(
-        ".size-button"
-      )
-      .style.background = "#333";
 
-    document
-      .querySelector(
-        ".size-button"
-      )
-      .style.color = "white";
+    /* 初期の太さ */
 
+    currentSize = 7;
 
   </script>
 
