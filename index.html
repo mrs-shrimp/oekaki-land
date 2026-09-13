@@ -1,12 +1,27 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="おえかきランド">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
+
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="default"
+  >
+
+  <meta
+    name="apple-mobile-web-app-title"
+    content="おえかきランド"
+  >
 
   <title>おえかきランド</title>
 
@@ -35,6 +50,7 @@
     body {
       min-height: 100vh;
       min-height: 100dvh;
+      overscroll-behavior: none;
     }
 
     button {
@@ -52,6 +68,7 @@
       min-height: 100vh;
       min-height: 100dvh;
       padding: 32px 20px 40px;
+
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -59,6 +76,7 @@
 
     .title {
       margin: 10px 0 4px;
+
       font-size: clamp(36px, 8vw, 64px);
       font-weight: 900;
       letter-spacing: 0.08em;
@@ -67,6 +85,7 @@
 
     .subtitle {
       margin: 0 0 30px;
+
       font-size: clamp(15px, 3vw, 21px);
       color: #777;
       text-align: center;
@@ -74,6 +93,7 @@
 
     .menu {
       width: min(900px, 100%);
+
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 16px;
@@ -81,15 +101,23 @@
 
     .menu-button {
       min-height: 105px;
+
       border: 3px solid #333;
       border-radius: 22px;
+
       background: white;
       color: #333;
+
       font-size: clamp(20px, 4vw, 30px);
       font-weight: 800;
+
       cursor: pointer;
+
       box-shadow: 0 5px 0 #333;
-      transition: transform 0.08s, box-shadow 0.08s;
+
+      transition:
+        transform 0.08s,
+        box-shadow 0.08s;
     }
 
     .menu-button:active {
@@ -99,7 +127,9 @@
 
     .menu-button .small {
       display: block;
+
       margin-top: 7px;
+
       font-size: 13px;
       font-weight: 500;
       color: #888;
@@ -108,18 +138,23 @@
     .menu-button.preparing {
       background: #eeeeee;
       color: #999;
+
       border-color: #aaa;
       box-shadow: 0 5px 0 #aaa;
     }
 
     .random-button {
       grid-column: 1 / -1;
+
       min-height: 82px;
+
       background: #333;
       color: white;
+
       border-color: #333;
       box-shadow: 0 5px 0 #111;
     }
+
 
     /* =========================
        お絵かき画面
@@ -127,34 +162,58 @@
 
     #drawingScreen {
       display: none;
+
       width: 100%;
       height: 100vh;
       height: 100dvh;
+
       position: fixed;
       inset: 0;
+
       background: white;
+
       flex-direction: column;
+
+      overflow: hidden;
     }
+
+
+    /* 上のバー */
 
     .drawing-header {
       height: 58px;
+      min-height: 58px;
+
       flex-shrink: 0;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 12px;
+
+      padding:
+        8px
+        max(12px, env(safe-area-inset-right))
+        8px
+        max(12px, env(safe-area-inset-left));
+
       border-bottom: 2px solid #ddd;
+
       background: #fafafa;
     }
 
     .header-button {
       min-width: 76px;
       min-height: 42px;
+
       padding: 8px 14px;
+
       border: 2px solid #333;
       border-radius: 12px;
+
       background: white;
+
       font-weight: 700;
+
       cursor: pointer;
     }
 
@@ -163,44 +222,82 @@
       font-weight: 800;
     }
 
+
+    /* キャンバス */
+
     #canvasArea {
       flex: 1;
+
       min-height: 0;
+
       position: relative;
+
       background: white;
+
+      overflow: hidden;
     }
 
     #drawingCanvas {
       display: block;
+
       width: 100%;
       height: 100%;
-      touch-action: none;
+
       background: white;
+
+      touch-action: none;
+
+      cursor: crosshair;
     }
 
+
+    /* =========================
+       ツールバー
+    ========================= */
+
     .drawing-toolbar {
-      min-height: 76px;
+      min-height: 82px;
+
       flex-shrink: 0;
+
       display: flex;
       align-items: center;
+
       justify-content: center;
-      gap: 10px;
-      padding: 10px;
+
+      gap: 8px;
+
+      padding:
+        8px
+        max(10px, env(safe-area-inset-right))
+        calc(8px + env(safe-area-inset-bottom))
+        max(10px, env(safe-area-inset-left));
+
       border-top: 2px solid #ddd;
+
       background: #fafafa;
+
       overflow-x: auto;
+
+      -webkit-overflow-scrolling: touch;
     }
 
     .tool-button {
       flex: 0 0 auto;
-      min-width: 64px;
-      min-height: 54px;
-      padding: 6px 10px;
+
+      min-width: 72px;
+      min-height: 58px;
+
+      padding: 7px 10px;
+
       border: 2px solid #333;
-      border-radius: 12px;
+      border-radius: 13px;
+
       background: white;
+
       font-size: 14px;
       font-weight: 700;
+
       cursor: pointer;
     }
 
@@ -209,11 +306,208 @@
       color: white;
     }
 
+    .tool-icon {
+      display: block;
+
+      font-size: 23px;
+
+      line-height: 24px;
+
+      margin-bottom: 3px;
+    }
+
+
     /* =========================
-       iPad 縦向き
+       ポップアップ
+    ========================= */
+
+    .popup {
+      display: none;
+
+      position: absolute;
+
+      left: 50%;
+      bottom: 92px;
+
+      transform: translateX(-50%);
+
+      width: min(520px, calc(100% - 24px));
+
+      padding: 16px;
+
+      background: white;
+
+      border: 2px solid #333;
+      border-radius: 18px;
+
+      box-shadow: 0 5px 20px rgba(0,0,0,0.18);
+
+      z-index: 20;
+    }
+
+    .popup.show {
+      display: block;
+    }
+
+    .popup-title {
+      margin: 0 0 12px;
+
+      text-align: center;
+
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+
+    /* 色 */
+
+    .color-grid {
+      display: grid;
+
+      grid-template-columns: repeat(8, 1fr);
+
+      gap: 9px;
+    }
+
+    .color-button {
+      width: 100%;
+      aspect-ratio: 1;
+
+      min-width: 34px;
+
+      border: 2px solid #555;
+      border-radius: 50%;
+
+      cursor: pointer;
+    }
+
+    .color-button.selected {
+      outline: 4px solid #333;
+      outline-offset: 2px;
+    }
+
+
+    /* 太さ */
+
+    .size-grid {
+      display: grid;
+
+      grid-template-columns: repeat(4, 1fr);
+
+      gap: 10px;
+    }
+
+    .size-button {
+      min-height: 55px;
+
+      border: 2px solid #333;
+      border-radius: 12px;
+
+      background: white;
+
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 8px;
+
+      font-weight: 700;
+    }
+
+    .size-dot {
+      display: inline-block;
+
+      width: var(--size);
+      height: var(--size);
+
+      border-radius: 50%;
+
+      background: #333;
+    }
+
+
+    /* =========================
+       確認ダイアログ
+    ========================= */
+
+    .confirm-overlay {
+      display: none;
+
+      position: fixed;
+      inset: 0;
+
+      background: rgba(0,0,0,0.35);
+
+      z-index: 100;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+    }
+
+    .confirm-overlay.show {
+      display: flex;
+    }
+
+    .confirm-box {
+      width: min(400px, 100%);
+
+      padding: 25px;
+
+      background: white;
+
+      border: 3px solid #333;
+      border-radius: 20px;
+
+      text-align: center;
+    }
+
+    .confirm-box h2 {
+      margin: 0 0 10px;
+
+      font-size: 23px;
+    }
+
+    .confirm-box p {
+      margin: 0 0 22px;
+
+      color: #666;
+    }
+
+    .confirm-buttons {
+      display: flex;
+
+      gap: 10px;
+    }
+
+    .confirm-buttons button {
+      flex: 1;
+
+      min-height: 52px;
+
+      border: 2px solid #333;
+      border-radius: 12px;
+
+      background: white;
+
+      font-weight: 700;
+    }
+
+    .confirm-buttons .danger {
+      background: #333;
+      color: white;
+    }
+
+
+    /* =========================
+       スマホ・iPad縦
     ========================= */
 
     @media (max-width: 700px) {
+
       #homeScreen {
         padding: 24px 14px 30px;
       }
@@ -230,13 +524,23 @@
       .drawing-toolbar {
         justify-content: flex-start;
       }
+
+      .color-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      .size-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
+
     /* =========================
-       iPad 横向き
+       横向き
     ========================= */
 
     @media (min-width: 701px) {
+
       .menu {
         grid-template-columns: repeat(3, 1fr);
       }
@@ -246,63 +550,100 @@
 
 <body>
 
-  <!-- =========================
+
+  <!-- ==================================
        トップ画面
-  ========================= -->
+  ================================== -->
 
   <main id="homeScreen">
 
     <h1 class="title">おえかきランド</h1>
-    <p class="subtitle">すきなあそびをえらんでね</p>
+
+    <p class="subtitle">
+      すきなあそびをえらんでね
+    </p>
 
     <div class="menu">
 
-      <button class="menu-button" onclick="openDrawing()">
+      <button
+        class="menu-button"
+        onclick="openDrawing()"
+      >
         じゆうにおえかき
-        <span class="small">すきなものをかこう</span>
+        <span class="small">
+          すきなものをかこう
+        </span>
       </button>
+
 
       <button class="menu-button preparing">
         おだいにちょうせん
-        <span class="small">じゅんびちゅう</span>
+        <span class="small">
+          じゅんびちゅう
+        </span>
       </button>
+
 
       <button class="menu-button preparing">
         おえかきタイムアタック
-        <span class="small">じゅんびちゅう</span>
+        <span class="small">
+          じゅんびちゅう
+        </span>
       </button>
+
 
       <button class="menu-button preparing">
         へんなおだい
-        <span class="small">じゅんびちゅう</span>
+        <span class="small">
+          じゅんびちゅう
+        </span>
       </button>
+
 
       <button class="menu-button preparing">
         おえかきしりとり
-        <span class="small">じゅんびちゅう</span>
+        <span class="small">
+          じゅんびちゅう
+        </span>
       </button>
+
 
       <button class="menu-button preparing">
         へんしんおえかき
-        <span class="small">じゅんびちゅう</span>
+        <span class="small">
+          じゅんびちゅう
+        </span>
       </button>
+
 
       <button class="menu-button preparing">
         すたんぷあそび
-        <span class="small">じゅんびちゅう</span>
+        <span class="small">
+          じゅんびちゅう
+        </span>
       </button>
+
 
       <button class="menu-button preparing">
         まちをつくろう
-        <span class="small">じゅんびちゅう</span>
+        <span class="small">
+          じゅんびちゅう
+        </span>
       </button>
+
 
       <button class="menu-button preparing">
         わたしのさくひん
-        <span class="small">じゅんびちゅう</span>
+        <span class="small">
+          じゅんびちゅう
+        </span>
       </button>
 
-      <button class="menu-button random-button">
+
+      <button
+        class="menu-button random-button"
+        onclick="randomMode()"
+      >
         なにしてあそぶ？
       </button>
 
@@ -311,61 +652,298 @@
   </main>
 
 
-  <!-- =========================
-       じゆうにおえかき画面
-  ========================= -->
+
+  <!-- ==================================
+       お絵かき画面
+  ================================== -->
 
   <section id="drawingScreen">
 
+
+    <!-- 上部 -->
+
     <header class="drawing-header">
-      <button class="header-button" onclick="closeDrawing()">
+
+      <button
+        class="header-button"
+        onclick="closeDrawing()"
+      >
         ← もどる
       </button>
+
 
       <div class="drawing-title">
         じゆうにおえかき
       </div>
 
-      <button class="header-button">
+
+      <button
+        class="header-button"
+        onclick="saveImage()"
+      >
         ほぞん
       </button>
+
     </header>
 
+
+
+    <!-- キャンバス -->
+
     <div id="canvasArea">
+
       <canvas id="drawingCanvas"></canvas>
+
+
+      <!-- 色ポップアップ -->
+
+      <div
+        id="colorPopup"
+        class="popup"
+      >
+
+        <p class="popup-title">
+          いろをえらぼう
+        </p>
+
+        <div class="color-grid">
+
+          <button
+            class="color-button selected"
+            style="background:#222222"
+            data-color="#222222"
+            onclick="selectColor(this)"
+          ></button>
+
+          <button
+            class="color-button"
+            style="background:#e53935"
+            data-color="#e53935"
+            onclick="selectColor(this)"
+          ></button>
+
+          <button
+            class="color-button"
+            style="background:#ff7043"
+            data-color="#ff7043"
+            onclick="selectColor(this)"
+          ></button>
+
+          <button
+            class="color-button"
+            style="background:#fbc02d"
+            data-color="#fbc02d"
+            onclick="selectColor(this)"
+          ></button>
+
+          <button
+            class="color-button"
+            style="background:#43a047"
+            data-color="#43a047"
+            onclick="selectColor(this)"
+          ></button>
+
+          <button
+            class="color-button"
+            style="background:#00acc1"
+            data-color="#00acc1"
+            onclick="selectColor(this)"
+          ></button>
+
+          <button
+            class="color-button"
+            style="background:#1e88e5"
+            data-color="#1e88e5"
+            onclick="selectColor(this)"
+          ></button>
+
+          <button
+            class="color-button"
+            style="background:#8e24aa"
+            data-color="#8e24aa"
+            onclick="selectColor(this)"
+          ></button>
+
+          <button
+            class="color-button"
+            style="background:#ec407a"
+            data-color="#ec407a"
+            onclick="selectColor(this)"
+          ></button>
+
+          <button
+            class="color-button"
+            style="background:#795548"
+            data-color="#795548"
+            onclick="selectColor(this)"
+          ></button>
+
+          <button
+            class="color-button"
+            style="background:#90a4ae"
+            data-color="#90a4ae"
+            onclick="selectColor(this)"
+          ></button>
+
+          <button
+            class="color-button"
+            style="background:#ffffff"
+            data-color="#ffffff"
+            onclick="selectColor(this)"
+          ></button>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- 太さポップアップ -->
+
+      <div
+        id="sizePopup"
+        class="popup"
+      >
+
+        <p class="popup-title">
+          ふとさをえらぼう
+        </p>
+
+        <div class="size-grid">
+
+          <button
+            class="size-button"
+            onclick="selectSize(3, this)"
+          >
+            <span
+              class="size-dot"
+              style="--size:4px"
+            ></span>
+            ほそい
+          </button>
+
+
+          <button
+            class="size-button"
+            onclick="selectSize(7, this)"
+          >
+            <span
+              class="size-dot"
+              style="--size:8px"
+            ></span>
+            ふつう
+          </button>
+
+
+          <button
+            class="size-button"
+            onclick="selectSize(14, this)"
+          >
+            <span
+              class="size-dot"
+              style="--size:14px"
+            ></span>
+            ふとい
+          </button>
+
+
+          <button
+            class="size-button"
+            onclick="selectSize(28, this)"
+          >
+            <span
+              class="size-dot"
+              style="--size:26px"
+            ></span>
+            とてもふとい
+          </button>
+
+        </div>
+
+      </div>
+
     </div>
+
+
+
+    <!-- ツールバー -->
 
     <div class="drawing-toolbar">
 
-      <button class="tool-button active">
+
+      <button
+        id="pencilButton"
+        class="tool-button active"
+        onclick="setTool('pencil')"
+      >
+        <span class="tool-icon">✏️</span>
         えんぴつ
       </button>
 
-      <button class="tool-button">
+
+      <button
+        id="eraserButton"
+        class="tool-button"
+        onclick="setTool('eraser')"
+      >
+        <span class="tool-icon">🧽</span>
         けしごむ
       </button>
 
-      <button class="tool-button">
+
+      <button
+        id="colorButton"
+        class="tool-button"
+        onclick="togglePopup('colorPopup')"
+      >
+        <span class="tool-icon">🎨</span>
         いろ
       </button>
 
-      <button class="tool-button">
+
+      <button
+        id="sizeButton"
+        class="tool-button"
+        onclick="togglePopup('sizePopup')"
+      >
+        <span class="tool-icon">●</span>
         ふとさ
       </button>
 
-      <button class="tool-button">
+
+      <button
+        id="fillButton"
+        class="tool-button"
+        onclick="setTool('fill')"
+      >
+        <span class="tool-icon">🪣</span>
         ぬりつぶし
       </button>
 
-      <button class="tool-button">
+
+      <button
+        class="tool-button"
+        onclick="undo()"
+      >
+        <span class="tool-icon">↩</span>
         もどす
       </button>
 
-      <button class="tool-button">
+
+      <button
+        class="tool-button"
+        onclick="redo()"
+      >
+        <span class="tool-icon">↪</span>
         すすむ
       </button>
 
-      <button class="tool-button">
+
+      <button
+        class="tool-button"
+        onclick="confirmClear()"
+      >
+        <span class="tool-icon">🗑</span>
         ぜんぶけす
       </button>
 
@@ -374,102 +952,966 @@
   </section>
 
 
+
+  <!-- ==================================
+       全消し確認
+  ================================== -->
+
+  <div
+    id="confirmOverlay"
+    class="confirm-overlay"
+  >
+
+    <div class="confirm-box">
+
+      <h2>
+        ぜんぶけしていい？
+      </h2>
+
+      <p>
+        かいたものが なくなります。
+      </p>
+
+      <div class="confirm-buttons">
+
+        <button onclick="closeConfirm()">
+          やめる
+        </button>
+
+        <button
+          class="danger"
+          onclick="clearCanvas()"
+        >
+          けす
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
   <script>
 
-    /* =========================
-       画面切り替え
-    ========================= */
+    /* ==================================
+       画面
+    ================================== */
 
     function openDrawing() {
+
       document.getElementById("homeScreen").style.display = "none";
+
       document.getElementById("drawingScreen").style.display = "flex";
 
-      resizeCanvas();
+      setTimeout(() => {
+        resizeCanvas();
+      }, 50);
+
     }
+
 
     function closeDrawing() {
+
       document.getElementById("drawingScreen").style.display = "none";
+
       document.getElementById("homeScreen").style.display = "flex";
+
+      closeAllPopups();
+
     }
 
 
-    /* =========================
-       キャンバス
-    ========================= */
+    function randomMode() {
 
-    const canvas = document.getElementById("drawingCanvas");
-    const ctx = canvas.getContext("2d");
+      alert("これから いろいろな あそびを つくっていくよ！");
+
+    }
+
+
+
+    /* ==================================
+       Canvas
+    ================================== */
+
+    const canvas =
+      document.getElementById("drawingCanvas");
+
+    const ctx =
+      canvas.getContext("2d", {
+        willReadFrequently: true
+      });
+
+
+    let canvasWidth = 0;
+    let canvasHeight = 0;
+
 
     function resizeCanvas() {
-      const rect = canvas.getBoundingClientRect();
 
-      const ratio = window.devicePixelRatio || 1;
+      const rect =
+        canvas.getBoundingClientRect();
 
-      canvas.width = rect.width * ratio;
-      canvas.height = rect.height * ratio;
+      const ratio =
+        window.devicePixelRatio || 1;
 
-      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, rect.width, rect.height);
+      canvasWidth = rect.width;
+      canvasHeight = rect.height;
+
+
+      canvas.width =
+        Math.floor(rect.width * ratio);
+
+      canvas.height =
+        Math.floor(rect.height * ratio);
+
+
+      ctx.setTransform(
+        ratio,
+        0,
+        0,
+        ratio,
+        0,
+        0
+      );
+
+
+      ctx.fillStyle = "#ffffff";
+
+      ctx.fillRect(
+        0,
+        0,
+        canvasWidth,
+        canvasHeight
+      );
+
     }
 
-    window.addEventListener("resize", () => {
-      if (document.getElementById("drawingScreen").style.display === "flex") {
-        resizeCanvas();
+
+
+    /* ==================================
+       お絵かき設定
+    ================================== */
+
+    let currentTool = "pencil";
+
+    let currentColor = "#222222";
+
+    let currentSize = 7;
+
+    let isDrawing = false;
+
+
+
+    function setTool(tool) {
+
+      currentTool = tool;
+
+      closeAllPopups();
+
+      document
+        .querySelectorAll(".tool-button")
+        .forEach(button => {
+          button.classList.remove("active");
+        });
+
+
+      if (tool === "pencil") {
+
+        document
+          .getElementById("pencilButton")
+          .classList.add("active");
+
+        canvas.style.cursor = "crosshair";
+
       }
-    });
 
 
-    /* =========================
-       仮のお絵かき機能
-       次の段階で本格化する
-    ========================= */
+      if (tool === "eraser") {
 
-    let drawing = false;
+        document
+          .getElementById("eraserButton")
+          .classList.add("active");
+
+        canvas.style.cursor = "cell";
+
+      }
+
+
+      if (tool === "fill") {
+
+        document
+          .getElementById("fillButton")
+          .classList.add("active");
+
+        canvas.style.cursor = "cell";
+
+      }
+
+    }
+
+
+
+    /* ==================================
+       色
+    ================================== */
+
+    function selectColor(button) {
+
+      currentColor =
+        button.dataset.color;
+
+
+      document
+        .querySelectorAll(".color-button")
+        .forEach(b => {
+          b.classList.remove("selected");
+        });
+
+
+      button.classList.add("selected");
+
+
+      setTool("pencil");
+
+      document
+        .getElementById("colorButton")
+        .style.borderColor =
+        currentColor;
+
+    }
+
+
+
+    /* ==================================
+       太さ
+    ================================== */
+
+    function selectSize(size, button) {
+
+      currentSize = size;
+
+      document
+        .querySelectorAll(".size-button")
+        .forEach(b => {
+          b.style.background = "white";
+          b.style.color = "#333";
+        });
+
+
+      button.style.background = "#333";
+      button.style.color = "white";
+
+      closeAllPopups();
+
+    }
+
+
+
+    /* ==================================
+       ポップアップ
+    ================================== */
+
+    function togglePopup(id) {
+
+      const popup =
+        document.getElementById(id);
+
+      const wasOpen =
+        popup.classList.contains("show");
+
+      closeAllPopups();
+
+      if (!wasOpen) {
+        popup.classList.add("show");
+      }
+
+    }
+
+
+    function closeAllPopups() {
+
+      document
+        .querySelectorAll(".popup")
+        .forEach(popup => {
+          popup.classList.remove("show");
+        });
+
+    }
+
+
+
+    /* ==================================
+       座標
+    ================================== */
 
     function getPosition(event) {
-      const rect = canvas.getBoundingClientRect();
+
+      const rect =
+        canvas.getBoundingClientRect();
 
       return {
         x: event.clientX - rect.left,
         y: event.clientY - rect.top
       };
+
     }
 
-    canvas.addEventListener("pointerdown", (event) => {
-      drawing = true;
 
-      const pos = getPosition(event);
+
+    /* ==================================
+       描く
+    ================================== */
+
+    canvas.addEventListener(
+      "pointerdown",
+      startDrawing
+    );
+
+
+    canvas.addEventListener(
+      "pointermove",
+      draw
+    );
+
+
+    canvas.addEventListener(
+      "pointerup",
+      stopDrawing
+    );
+
+
+    canvas.addEventListener(
+      "pointercancel",
+      stopDrawing
+    );
+
+
+    canvas.addEventListener(
+      "pointerleave",
+      stopDrawing
+    );
+
+
+
+    function startDrawing(event) {
+
+      event.preventDefault();
+
+      closeAllPopups();
+
+
+      const pos =
+        getPosition(event);
+
+
+      /* ぬりつぶし */
+
+      if (currentTool === "fill") {
+
+        saveHistory();
+
+        floodFill(
+          Math.floor(pos.x),
+          Math.floor(pos.y)
+        );
+
+        return;
+
+      }
+
+
+      isDrawing = true;
+
+
+      try {
+        canvas.setPointerCapture(event.pointerId);
+      } catch (e) {}
+
 
       ctx.beginPath();
-      ctx.moveTo(pos.x, pos.y);
-    });
 
-    canvas.addEventListener("pointermove", (event) => {
-      if (!drawing) return;
+      ctx.moveTo(
+        pos.x,
+        pos.y
+      );
 
-      const pos = getPosition(event);
 
-      ctx.lineWidth = 4;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      ctx.strokeStyle = "#333";
 
-      ctx.lineTo(pos.x, pos.y);
+      ctx.lineWidth =
+        currentSize;
+
+
+      if (currentTool === "eraser") {
+
+        ctx.globalCompositeOperation =
+          "destination-out";
+
+      } else {
+
+        ctx.globalCompositeOperation =
+          "source-over";
+
+        ctx.strokeStyle =
+          currentColor;
+
+      }
+
+
+      /* 点を描く */
+
+      ctx.lineTo(
+        pos.x + 0.01,
+        pos.y + 0.01
+      );
+
       ctx.stroke();
 
+    }
+
+
+
+    function draw(event) {
+
+      if (!isDrawing) {
+        return;
+      }
+
+
+      event.preventDefault();
+
+
+      const pos =
+        getPosition(event);
+
+
+      ctx.lineTo(
+        pos.x,
+        pos.y
+      );
+
+      ctx.stroke();
+
+
       ctx.beginPath();
-      ctx.moveTo(pos.x, pos.y);
-    });
 
-    canvas.addEventListener("pointerup", () => {
-      drawing = false;
-    });
+      ctx.moveTo(
+        pos.x,
+        pos.y
+      );
 
-    canvas.addEventListener("pointercancel", () => {
-      drawing = false;
-    });
+    }
+
+
+
+    function stopDrawing(event) {
+
+      if (!isDrawing) {
+        return;
+      }
+
+
+      isDrawing = false;
+
+
+      try {
+        canvas.releasePointerCapture(event.pointerId);
+      } catch (e) {}
+
+
+      ctx.closePath();
+
+
+      ctx.globalCompositeOperation =
+        "source-over";
+
+
+      saveHistory();
+
+    }
+
+
+
+    /* ==================================
+       履歴
+    ================================== */
+
+    let history = [];
+
+    let historyIndex = -1;
+
+    let restoringHistory = false;
+
+
+    function getCanvasData() {
+
+      return canvas.toDataURL(
+        "image/png"
+      );
+
+    }
+
+
+    function saveHistory() {
+
+      if (restoringHistory) {
+        return;
+      }
+
+
+      const image =
+        getCanvasData();
+
+
+      /*
+        途中で「もどす」をしたあとに
+        新しい絵を描いたら、
+        その先の履歴は消す
+      */
+
+      history =
+        history.slice(
+          0,
+          historyIndex + 1
+        );
+
+
+      history.push(image);
+
+
+      /*
+        履歴が増えすぎないように
+        最大30回
+      */
+
+      if (history.length > 30) {
+        history.shift();
+      }
+
+
+      historyIndex =
+        history.length - 1;
+
+    }
+
+
+
+    function restoreHistory(imageData) {
+
+      restoringHistory = true;
+
+
+      const image =
+        new Image();
+
+
+      image.onload = function() {
+
+        ctx.clearRect(
+          0,
+          0,
+          canvasWidth,
+          canvasHeight
+        );
+
+
+        ctx.globalCompositeOperation =
+          "source-over";
+
+
+        ctx.drawImage(
+          image,
+          0,
+          0,
+          canvasWidth,
+          canvasHeight
+        );
+
+
+        restoringHistory = false;
+
+      };
+
+
+      image.src = imageData;
+
+    }
+
+
+
+    function undo() {
+
+      closeAllPopups();
+
+
+      if (historyIndex <= 0) {
+        return;
+      }
+
+
+      historyIndex--;
+
+
+      restoreHistory(
+        history[historyIndex]
+      );
+
+    }
+
+
+
+    function redo() {
+
+      closeAllPopups();
+
+
+      if (
+        historyIndex >=
+        history.length - 1
+      ) {
+        return;
+      }
+
+
+      historyIndex++;
+
+
+      restoreHistory(
+        history[historyIndex]
+      );
+
+    }
+
+
+
+    /* ==================================
+       全消し
+    ================================== */
+
+    function confirmClear() {
+
+      closeAllPopups();
+
+      document
+        .getElementById("confirmOverlay")
+        .classList.add("show");
+
+    }
+
+
+    function closeConfirm() {
+
+      document
+        .getElementById("confirmOverlay")
+        .classList.remove("show");
+
+    }
+
+
+    function clearCanvas() {
+
+      closeConfirm();
+
+
+      saveHistory();
+
+
+      ctx.globalCompositeOperation =
+        "source-over";
+
+
+      ctx.fillStyle =
+        "#ffffff";
+
+
+      ctx.fillRect(
+        0,
+        0,
+        canvasWidth,
+        canvasHeight
+      );
+
+
+      saveHistory();
+
+    }
+
+
+
+    /* ==================================
+       ぬりつぶし
+    ================================== */
+
+    function floodFill(
+      startX,
+      startY
+    ) {
+
+      const width =
+        canvas.width;
+
+      const height =
+        canvas.height;
+
+
+      const ratio =
+        window.devicePixelRatio || 1;
+
+
+      /*
+        Canvas内部は高解像度なので、
+        タップ位置を内部座標へ変換
+      */
+
+      const x =
+        Math.floor(startX * ratio);
+
+      const y =
+        Math.floor(startY * ratio);
+
+
+      if (
+        x < 0 ||
+        x >= width ||
+        y < 0 ||
+        y >= height
+      ) {
+        return;
+      }
+
+
+      const imageData =
+        ctx.getImageData(
+          0,
+          0,
+          width,
+          height
+        );
+
+
+      const data =
+        imageData.data;
+
+
+      const startIndex =
+        (y * width + x) * 4;
+
+
+      const targetR =
+        data[startIndex];
+
+      const targetG =
+        data[startIndex + 1];
+
+      const targetB =
+        data[startIndex + 2];
+
+      const targetA =
+        data[startIndex + 3];
+
+
+      const fillColor =
+        hexToRgba(currentColor);
+
+
+      /*
+        すでに同じ色なら何もしない
+      */
+
+      if (
+        targetR === fillColor.r &&
+        targetG === fillColor.g &&
+        targetB === fillColor.b &&
+        targetA === 255
+      ) {
+        return;
+      }
+
+
+      const tolerance = 25;
+
+
+      function matches(index) {
+
+        return (
+          Math.abs(data[index] - targetR)
+            <= tolerance &&
+
+          Math.abs(data[index + 1] - targetG)
+            <= tolerance &&
+
+          Math.abs(data[index + 2] - targetB)
+            <= tolerance &&
+
+          Math.abs(data[index + 3] - targetA)
+            <= tolerance
+        );
+
+      }
+
+
+      const stack = [[x, y]];
+
+
+      while (stack.length > 0) {
+
+        const point =
+          stack.pop();
+
+
+        const px = point[0];
+        const py = point[1];
+
+
+        if (
+          px < 0 ||
+          px >= width ||
+          py < 0 ||
+          py >= height
+        ) {
+          continue;
+        }
+
+
+        const index =
+          (py * width + px) * 4;
+
+
+        if (!matches(index)) {
+          continue;
+        }
+
+
+        data[index] =
+          fillColor.r;
+
+        data[index + 1] =
+          fillColor.g;
+
+        data[index + 2] =
+          fillColor.b;
+
+        data[index + 3] =
+          255;
+
+
+        stack.push([px + 1, py]);
+        stack.push([px - 1, py]);
+        stack.push([px, py + 1]);
+        stack.push([px, py - 1]);
+
+      }
+
+
+      ctx.putImageData(
+        imageData,
+        0,
+        0
+      );
+
+
+      saveHistory();
+
+    }
+
+
+
+    function hexToRgba(hex) {
+
+      hex =
+        hex.replace("#", "");
+
+
+      return {
+        r: parseInt(
+          hex.substring(0, 2),
+          16
+        ),
+
+        g: parseInt(
+          hex.substring(2, 4),
+          16
+        ),
+
+        b: parseInt(
+          hex.substring(4, 6),
+          16
+        ),
+
+        a: 255
+      };
+
+    }
+
+
+
+    /* ==================================
+       保存
+    ================================== */
+
+    function saveImage() {
+
+      const link =
+        document.createElement("a");
+
+
+      link.download =
+        "おえかき.png";
+
+
+      link.href =
+        canvas.toDataURL(
+          "image/png"
+        );
+
+
+      link.click();
+
+    }
+
+
+
+    /* ==================================
+       初期化
+    ================================== */
+
+    /*
+      お絵かき画面を最初に開いたとき、
+      「最初の真っ白な状態」を
+      履歴に入れる
+    */
+
+    function initializeHistory() {
+
+      history = [];
+
+      historyIndex = -1;
+
+      saveHistory();
+
+    }
+
+
+    /*
+      サイズの初期選択
+    */
+
+    document
+      .querySelector(
+        ".size-button"
+      )
+      .style.background = "#333";
+
+    document
+      .querySelector(
+        ".size-button"
+      )
+      .style.color = "white";
+
 
   </script>
 
